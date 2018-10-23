@@ -25,14 +25,14 @@ public class ParticipantController {
     }
 
     @CrossOrigin(origins = "http://localhost:3001")
-    @GetMapping("/participant/{participantId}")
+    @GetMapping("/participants/{participantId}")
     public ParticipantModelForView getParticipant(@PathVariable long participantId) {
 
         return participantService.getParticipant(participantId);
     }
 
     @CrossOrigin(origins = "http://localhost:3001")
-    @PostMapping("/participant")
+    @PostMapping("/participants")
     @ResponseStatus(HttpStatus.CREATED)
     public ParticipantModelForCreating createParticipant(@RequestBody ParticipantModelForCreating participantModelForCreating) {
 
@@ -40,7 +40,7 @@ public class ParticipantController {
     }
 
     @CrossOrigin(origins = "http://localhost:3001")
-    @PutMapping("/participant/{participantId}")
+    @PutMapping("/participants/{participantId}")
     @ResponseStatus(HttpStatus.CREATED)
     public ParticipantModelForCreating updateParticipant(@PathVariable long participantId,
                                                          @RequestBody ParticipantModelForCreating participantModelForCreating) {
@@ -49,7 +49,7 @@ public class ParticipantController {
     }
 
     @CrossOrigin(origins = "http://localhost:3001")
-    @DeleteMapping("/participant/{participantId}")
+    @DeleteMapping("/participants/{participantId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteParticipant(@PathVariable long participantId) {
 
