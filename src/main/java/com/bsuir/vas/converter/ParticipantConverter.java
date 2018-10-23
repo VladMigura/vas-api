@@ -1,6 +1,7 @@
 package com.bsuir.vas.converter;
 
 import com.bsuir.vas.entity.ParticipantEntity;
+import com.bsuir.vas.model.ParticipantModelForCreating;
 import com.bsuir.vas.model.ParticipantModelForView;
 
 import java.util.ArrayList;
@@ -29,12 +30,12 @@ public class ParticipantConverter {
         return participantModelForViews;
     }
 
-    public static ParticipantEntity toParticipantEntity(ParticipantModelForView participantModelForView) {
+    public static ParticipantEntity toParticipantEntity(ParticipantModelForCreating participantModelForCreating) {
 
         return ParticipantEntity.builder()
-                .firstName(participantModelForView.getFirstName())
-                .lastName(participantModelForView.getLastName())
-                .middleName(participantModelForView.getMiddleName())
+                .firstName(participantModelForCreating.getFirstName())
+                .lastName(participantModelForCreating.getLastName())
+                .middleName(participantModelForCreating.getMiddleName())
                 .build();
     }
 }

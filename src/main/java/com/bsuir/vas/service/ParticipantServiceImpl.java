@@ -3,6 +3,7 @@ package com.bsuir.vas.service;
 import com.bsuir.vas.converter.ParticipantConverter;
 import com.bsuir.vas.entity.ParticipantEntity;
 import com.bsuir.vas.entity.PaymentEntity;
+import com.bsuir.vas.exception.NotFoundException;
 import com.bsuir.vas.model.ParticipantModelForCreating;
 import com.bsuir.vas.model.ParticipantModelForView;
 import com.bsuir.vas.repository.ParticipantRepository;
@@ -59,27 +60,50 @@ public class ParticipantServiceImpl implements ParticipantService {
                     .boxed()
                     .collect(Collectors.toList()));
 
-
+            return participantModelForView;
         }
 
-        return null;
+        throw new NotFoundException("Participant is not found!");
     }
 
     @Override
     @PreAuthorize("@securityUtility.isAuthenticated()")
     public ParticipantModelForCreating createParticipant(ParticipantModelForCreating participantModelForCreating) {
-        return null;
+
+        participantRepository.save(ParticipantConverter.toParticipantEntity(participantModelForCreating));
+        return participantModelForCreating;
     }
 
     @Override
     @PreAuthorize("@securityUtility.isAuthenticated()")
     public ParticipantModelForCreating updateParticipant(long participantId, ParticipantModelForCreating participantModelForCreating) {
-        return null;
+
+        ParticipantEntity participantEntity = participantRepository.findOneById(participantId);
+
+        if(participantEntity != null) {
+            participantEntity.setFirstName(participantModelForCreating.getFirstName());
+            participantEntity.setLastName(participantModelForCreating.getLastName());
+            participantEntity.setMiddleName(participantModelForCreating.getMiddleName());
+
+            participantRepository.save(participantEntity);
+
+            return participantModelForCreating;
+        }
+
+        throw new NotFoundException("Participant is not found!");
     }
 
     @Override
     @PreAuthorize("@securityUtility.isAuthenticated()")
     public void deleteParticipant(long participantId) {
 
+        ParticipantEntity participantEntity = participantRepository.findOneById(participantId);
+
+        if(participantEntity != null) {
+            participantRepository.deleteOneById(participantId);
+            paymentRepository.deleteAllByParticipantId(participantId);
+        } else {
+            throw new NotFoundException("Participant is not found!");
+        }
     }
 }

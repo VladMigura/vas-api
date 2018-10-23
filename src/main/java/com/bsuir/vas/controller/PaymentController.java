@@ -12,7 +12,7 @@ public class PaymentController {
     @Autowired
     private PaymentService paymentService;
 
-    @CrossOrigin(origins = "http://localhost:8080")
+    @CrossOrigin(origins = "http://localhost:3001")
     @PostMapping("/payments")
     @ResponseStatus(HttpStatus.CREATED)
     public PaymentModel createPayments(@RequestBody PaymentModel paymentModel) {
@@ -20,7 +20,7 @@ public class PaymentController {
         return paymentService.createPayments(paymentModel);
     }
 
-    @CrossOrigin(origins = "http://localhost:8080")
+    @CrossOrigin(origins = "http://localhost:3001")
     @DeleteMapping("/payments")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deletePayments(@RequestBody PaymentModel paymentModel) {

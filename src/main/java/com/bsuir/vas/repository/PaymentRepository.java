@@ -23,8 +23,18 @@ public interface PaymentRepository extends JpaRepository<PaymentEntity, Long> {
     @Query(value = "UPDATE payment " +
                     "SET deleted_at = now() " +
                     "WHERE user_id = :participantId " +
-                    "AND year IN (:paymentYears) ",
+                    "AND year IN (:paymentYears) " +
+                    "AND deleted_at IS NULL ",
             nativeQuery = true)
     void deleteAllByParameters(@Param("participantId") long participantId,
                                @Param("paymentYears") List<Long> paymentYears);
+
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE payment " +
+                    "SET deleted_at = now() " +
+                    "WHERE user_id = :participantId " +
+                    "AND deleted_at IS NULL ",
+            nativeQuery = true)
+    void deleteAllByParticipantId(@Param("participantId") long participantId);
 }

@@ -11,7 +11,6 @@ import lombok.NoArgsConstructor;
 @Builder
 public class ParticipantModelForCreating {
 
-    private long id;
     private String firstName;
     private String lastName;
     private String middleName;
