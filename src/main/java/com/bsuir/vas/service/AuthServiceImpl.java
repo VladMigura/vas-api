@@ -39,6 +39,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
+    @PreAuthorize("@securityUtility.isAuthenticated()")
     public AdminModel getAdmin(long adminId) {
 
         AdminEntity adminEntity = adminRepository.findOneById(adminId);
@@ -51,6 +52,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
+    @PreAuthorize("@securityUtility.isAuthenticated()")
     public AdminModel updateAdmin(long adminId, SignUpModel signUpModel) {
 
         AdminEntity adminEntity = adminRepository.findOneById(adminId);
@@ -67,6 +69,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
+    @PreAuthorize("@securityUtility.isAuthenticated()")
     public void deleteAdmin(long adminId) {
 
         AdminEntity adminEntity = adminRepository.findOneById(adminId);

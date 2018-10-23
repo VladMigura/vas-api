@@ -42,6 +42,7 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
+    @PreAuthorize("@securityUtility.isAuthenticated()")
     public void deletePayments(PaymentModel paymentModel) {
 
         paymentRepository.deleteAllByParameters(paymentModel.getParticipantId(), paymentModel.getYears());
