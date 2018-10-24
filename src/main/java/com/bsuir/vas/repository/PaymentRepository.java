@@ -14,7 +14,8 @@ public interface PaymentRepository extends JpaRepository<PaymentEntity, Long> {
     @Query(value = "SELECT * " +
                     "FROM payment " +
                     "WHERE user_id = :participantId " +
-                    "AND deleted_at IS NULL ",
+                    "AND deleted_at IS NULL " +
+                    "ORDER BY payment.year ",
             nativeQuery = true)
     List<PaymentEntity> findAllByParticipantId(@Param("participantId") long ParticipantId);
 

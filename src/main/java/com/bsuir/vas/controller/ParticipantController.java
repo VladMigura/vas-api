@@ -15,7 +15,6 @@ public class ParticipantController {
     @Autowired
     private ParticipantService participantService;
 
-    @CrossOrigin(origins = "http://localhost:3001")
     @GetMapping("/participants")
     public List<ParticipantModelForView> getParticipants(@RequestParam(name = "firstName", required = false) String firstName,
                                                          @RequestParam(name = "lastName", required = false) String lastName,
@@ -24,14 +23,12 @@ public class ParticipantController {
         return participantService.getParticipants(firstName, lastName, middleName);
     }
 
-    @CrossOrigin(origins = "http://localhost:3001")
     @GetMapping("/participants/{participantId}")
     public ParticipantModelForView getParticipant(@PathVariable long participantId) {
 
         return participantService.getParticipant(participantId);
     }
 
-    @CrossOrigin(origins = "http://localhost:3001")
     @PostMapping("/participants")
     @ResponseStatus(HttpStatus.CREATED)
     public ParticipantModelForCreating createParticipant(@RequestBody ParticipantModelForCreating participantModelForCreating) {
@@ -39,7 +36,6 @@ public class ParticipantController {
         return participantService.createParticipant(participantModelForCreating);
     }
 
-    @CrossOrigin(origins = "http://localhost:3001")
     @PutMapping("/participants/{participantId}")
     @ResponseStatus(HttpStatus.CREATED)
     public ParticipantModelForCreating updateParticipant(@PathVariable long participantId,
@@ -48,7 +44,6 @@ public class ParticipantController {
         return participantService.updateParticipant(participantId, participantModelForCreating);
     }
 
-    @CrossOrigin(origins = "http://localhost:3001")
     @DeleteMapping("/participants/{participantId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteParticipant(@PathVariable long participantId) {

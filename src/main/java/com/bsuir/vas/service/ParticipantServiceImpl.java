@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
@@ -33,12 +33,17 @@ public class ParticipantServiceImpl implements ParticipantService {
                         .findAllByParameters(firstName, lastName, middleName));
 
         participantModelsForView.forEach(participantModelForView -> {
-            participantModelForView.setPaymentYears(paymentRepository
-                    .findAllByParticipantId(participantModelForView.getId())
-                    .stream()
-                    .mapToLong(PaymentEntity::getYear)
-                    .boxed()
-                    .collect(Collectors.toList()));
+            List<Long> uniquePayments = new ArrayList<>(paymentRepository
+                                                .findAllByParticipantId(participantModelForView.getId())
+                                                .stream()
+                                                .mapToLong(PaymentEntity::getYear)
+                                                .boxed()
+                                                .collect(Collectors.toSet())
+                                                .stream()
+                                                .sorted()
+                                                .collect(Collectors.toList()));
+
+            participantModelForView.setPaymentYears(uniquePayments);
         });
 
         return participantModelsForView;
